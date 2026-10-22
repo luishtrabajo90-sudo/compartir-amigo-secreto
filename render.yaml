@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: amigo-secreto
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: amigo-secreto-db
+          property: connectionString
+databases:
+  - name: amigo-secreto-db
+    plan: free

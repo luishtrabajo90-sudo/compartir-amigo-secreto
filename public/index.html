@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Amigo Secreto - Sorteo Privado</title>
+<style>
+:root{--green:#073b2a;--green2:#0b6848;--red:#a5162f;--gold:#f5c84c;--cream:#fffaf0;--ink:#18211d;--muted:#68736d}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#052d21,#0b6848 52%,#671126);color:white;min-height:100vh}.wrap{max-width:1050px;margin:auto;padding:24px}.hero{display:flex;justify-content:space-between;gap:18px;align-items:end;margin:12px 0 24px}.hero h1{font-size:clamp(38px,7vw,68px);margin:4px 0}.hero p{margin:0;color:#d8f4e7}.pill{display:inline-block;background:var(--gold);color:#213b2f;font-weight:800;padding:7px 12px;border-radius:999px}.card{background:rgba(255,255,255,.97);color:var(--ink);border-radius:22px;padding:24px;box-shadow:0 18px 55px #001a1266}.grid{display:grid;grid-template-columns:1.12fr .88fr;gap:22px}.panel{background:#edf8f2;border-radius:17px;padding:18px}.field{margin:14px 0}.field label{display:block;font-weight:750;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd7d0;border-radius:12px;padding:12px;font:inherit;background:white}.field textarea{min-height:250px;resize:vertical}.btn{border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:800;cursor:pointer}.btn-primary{background:var(--green2);color:white}.btn-red{background:var(--red);color:white}.btn-gold{background:var(--gold);color:#263d32}.btn-outline{background:white;border:1px solid #b6c2bc;color:#263d32}.btn:disabled{opacity:.55;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap}.message{padding:11px 13px;border-radius:11px;margin-top:13px;font-weight:650}.error{background:#ffe2e5;color:#8c1023}.ok{background:#ddf7e8;color:#075f3d}.wheel{width:220px;height:220px;margin:20px auto;border-radius:50%;display:grid;place-items:center;color:white;background:conic-gradient(#ae1833 0 45deg,#f4c84b 45deg 90deg,#08704d 90deg 135deg,#fff 135deg 180deg,#ae1833 180deg 225deg,#f4c84b 225deg 270deg,#08704d 270deg 315deg,#fff 315deg);border:12px solid #f8e3a2;box-shadow:0 12px 35px #10271b55;position:relative}.wheel:after{content:"🎁";font-size:56px;background:#8d1730;width:105px;height:105px;display:grid;place-items:center;border-radius:50%;border:7px solid white}.spin{animation:spin 1.8s cubic-bezier(.2,.7,.2,1)}@keyframes spin{to{transform:rotate(1800deg)}}.result{text-align:center;background:#fff2bd;border-radius:16px;padding:22px;margin-top:16px}.result strong{display:block;color:#075f3d;font-size:32px;margin-top:7px}.hidden{display:none!important}.admin-box{background:#153d30;color:white;border-radius:18px;padding:18px}.admin-list{max-height:440px;overflow:auto}.row{display:grid;grid-template-columns:1.1fr .7fr .7fr;gap:8px;align-items:center;padding:10px;border-bottom:1px solid #ffffff25}.small{font-size:12px;color:#c6eada}.status{font-size:12px;font-weight:800;padding:5px 8px;border-radius:999px;text-align:center}.pending{background:#ffffff22}.done{background:#6ee7a9;color:#083d2a}.note{font-size:13px;color:var(--muted);line-height:1.45}.top-actions{display:flex;gap:10px;justify-content:flex-end;margin-bottom:12px}.modal{position:fixed;inset:0;background:#00170fc7;display:grid;place-items:center;padding:18px;z-index:20}.modal-card{width:min(460px,100%);background:white;color:var(--ink);padding:24px;border-radius:20px}@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{align-items:start;flex-direction:column}.row{grid-template-columns:1fr .65fr}.row .assignment{grid-column:1/-1}.wrap{padding:14px}.top-actions{justify-content:flex-start}}
+
+/* Decoracion navidena simple */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(circle,#fff 0 2px,transparent 2.5px),radial-gradient(circle,#fff9 0 1.5px,transparent 2px);background-size:74px 74px,46px 46px;background-position:0 0,18px 24px;animation:snowfall 16s linear infinite;opacity:.55}
+@keyframes snowfall{to{background-position:0 740px,18px 484px}}
+.christmas-lights{height:28px;margin-bottom:8px;background:radial-gradient(circle at 12px 8px,#ffd54f 0 5px,transparent 6px) 0 0/48px 28px repeat-x;filter:drop-shadow(0 0 5px #ffd54f)}
+.music-btn{position:fixed;right:18px;bottom:18px;z-index:15;border:1px solid #ffffff55;background:#8d1730;color:#fff;box-shadow:0 8px 25px #00180f88}
+.music-btn:hover{background:#a81d3a}
+.holly{font-size:25px;letter-spacing:4px;margin-left:8px}
+
+#fireworksCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+.gear-btn{width:58px;height:58px;border-radius:50%;border:3px solid #f7d35b;background:linear-gradient(145deg,#fff8d8,#f2c94c);color:#174b38;font-size:31px;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 22px #001b1266,0 0 0 5px #ffffff18;transition:transform .2s,box-shadow .2s}.gear-btn:hover{transform:rotate(24deg) scale(1.06);box-shadow:0 10px 28px #001b1288,0 0 0 6px #ffffff22}.gear-btn:focus{outline:3px solid white;outline-offset:4px}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="christmas-lights" aria-hidden="true"></div>
+  <header class="hero"><div><span class="pill">Sorteo privado</span><h1>Amigo Secreto <span class="holly" aria-hidden="true">🎄✨</span></h1><p>Cantidad flexible de participantes, sin autoasignaciones ni nombres repetidos.</p></div><button class="gear-btn" onclick="openAdmin()" aria-label="Acceso administrador" title="Acceso administrador">⚙</button></header>
+
+  <section id="setupView" class="card hidden">
+    <h2>Configuración inicial</h2>
+    <div class="grid">
+      <div class="field"><label>Participantes iniciales</label><textarea id="namesInput" readonly></textarea></div>
+      <div class="panel">
+        <div class="field"><label>Administradora</label><input value="Ana Carrizo" readonly></div><p class="note">El PIN administrativo ya está configurado.</p>
+        <p class="note">Al crear el sorteo se generan asignaciones secretas y se guardan en la base de datos central.</p>
+        <button class="btn btn-primary" onclick="createDraw()">Crear sorteo</button>
+        <div id="setupMsg"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="participantView" class="card hidden">
+    <div class="grid">
+      <div>
+        <h2>Descubre tu amigo secreto</h2>
+        <div class="field"><label>Tu nombre</label><select id="participantSelect"><option value="">Selecciona tu nombre</option></select></div>
+        <div class="field"><label>Código para activar la ruleta</label><input id="participantCode" maxlength="8" placeholder="Ingresa el código de activación"></div>
+        <div id="wheel" class="wheel"></div>
+        <button id="spinBtn" class="btn btn-red" style="width:100%" onclick="spinWheel()">Activar ruleta</button>
+        <div id="participantMsg"></div>
+        <div id="resultBox" class="result hidden"><span>Tu amigo secreto es</span><strong id="resultName"></strong><p class="note">Memoriza el nombre y cierra esta pantalla.</p><button class="btn btn-outline" onclick="closeResult()">Cerrar resultado</button></div>
+      </div>
+      <aside class="panel"><h3>Privacidad del sorteo</h3><p>✓ Cada persona participa una vez.</p><p>✓ Nadie puede obtener su propio nombre.</p><p>✓ Cada receptor se asigna una sola vez.</p><p>✓ Solo el administrador puede abrir el panel completo.</p><p class="note"><b>Importante:</b> esta versión usa una base de datos central y sincroniza el estado entre dispositivos.</p></aside>
+    </div>
+  </section>
+</div>
+
+<div id="adminModal" class="modal hidden"><div class="modal-card"><h2>Acceso de administrador</h2><div class="field"><label>Usuario</label><input id="adminUser" type="text" autocomplete="username" placeholder="Usuario administrador"></div><div class="field"><label>PIN</label><input id="adminPin" type="password" inputmode="numeric" autocomplete="current-password" onkeydown="if(event.key==='Enter')loginAdmin()"></div><div class="actions"><button class="btn btn-primary" onclick="loginAdmin()">Entrar</button><button class="btn btn-outline" onclick="closeAdmin()">Cancelar</button></div><div id="adminLoginMsg"></div></div></div>
+
+<div id="adminPanel" class="modal hidden"><div class="modal-card" style="width:min(900px,100%);max-height:92vh;overflow:auto"><div class="top-actions"><button class="btn btn-gold" onclick="exportExcel()">Exportar para Excel</button><button class="btn btn-outline" onclick="document.getElementById('importFile').click()">Importar respaldo</button><input id="importFile" type="file" accept=".json" class="hidden" onchange="importBackup(event)"><button class="btn btn-outline" onclick="logoutAdmin()">Cerrar</button></div><div class="admin-box"><h2>Panel administrativo</h2><p class="small">Sesión: admin01</p><p class="small">Aquí se muestran códigos, estado y asignaciones. No compartas esta vista.</p><div style="margin:14px 0" class="actions"><button class="btn btn-gold" onclick="toggleNameEditor()">✏️ Editar participantes</button><button class="btn btn-gold" onclick="toggleSecurityEditor()">🔐 Cambiar códigos</button></div>
+<div id="nameEditor" class="hidden" style="background:white;color:#18211d;border-radius:14px;padding:14px;margin-bottom:14px"><p class="note"><b>Editar participantes:</b> agrega, cambia o elimina nombres antes de que alguien participe. Se requieren al menos 2 nombres únicos.</p><div id="participantFields"></div><div class="actions" style="margin:12px 0"><button type="button" class="btn btn-gold" onclick="addParticipantField()">＋ Añadir participante</button><button type="button" class="btn btn-primary" onclick="saveNames()">Guardar participantes y regenerar sorteo</button></div><div id="participantCount" class="note"></div><div id="namesMsg"></div></div>
+<div id="securityEditor" class="hidden" style="background:white;color:#18211d;border-radius:14px;padding:14px;margin-bottom:14px"><h3>Administrar códigos</h3><div class="field"><label>Nuevo código general de participantes</label><input id="newParticipantCode" inputmode="numeric" maxlength="20" placeholder="Nuevo código"></div><button type="button" class="btn btn-primary" onclick="changeParticipantCode()">Cambiar código de participantes</button><hr style="margin:20px 0;border:0;border-top:1px solid #d5ddd8"><div class="field"><label>Clave actual de admin01</label><input id="currentAdminPin" type="password" inputmode="numeric"></div><div class="field"><label>Nueva clave de admin01</label><input id="newAdminPin" type="password" inputmode="numeric"></div><div class="field"><label>Confirmar nueva clave</label><input id="confirmAdminPin" type="password" inputmode="numeric"></div><button type="button" class="btn btn-red" onclick="changeAdminPin()">Cambiar clave de admin01</button><div id="securityMsg"></div></div>
+<div class="admin-list" id="adminList"></div></div><div class="actions" style="margin-top:16px"><button class="btn btn-primary" onclick="downloadBackup()">Guardar respaldo administrativo</button><button class="btn btn-red" onclick="resetDraw()">Eliminar y reiniciar sorteo</button></div></div></div>
+<script>
+const $=id=>document.getElementById(id);let state={names:[],claimed:{},initialized:false,participantCode:'12435687'};let adminCredentials=null;
+const defaults=['Patricia Von Elsner','Veronica Montero','Valentina Socorro','David Pineda','Brenda Barradez','Charles Centeno','Mayerlin Hernandez','Desiree Urdaneta','Jaizkibel Urruzuno','Nina Ferrer','Aura Ponce','Dayana Pitarresi','Paola Romero','Gabriela Bello','Ana Carrizo','Daniela Abad'];
+function showMsg(id,text,type='error'){$(id).innerHTML=`<div class="message ${type}">${text}</div>`}function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+async function api(path,options={}){const r=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}}),b=await r.json().catch(()=>({}));if(!r.ok)throw new Error(b.error||'Error de conexión');return b}
+async function init(){try{state=await api('/api/status');if(state.initialized){$('participantView').classList.remove('hidden');populateParticipants()}else{$('setupView').classList.remove('hidden');$('namesInput').value=defaults.join('\n')}}catch(e){$('setupView').classList.remove('hidden');showMsg('setupMsg',e.message)}}
+async function createDraw(){try{await api('/api/setup',{method:'POST',body:JSON.stringify({names:defaults})});$('setupView').classList.add('hidden');$('participantView').classList.remove('hidden');state=await api('/api/status');populateParticipants()}catch(e){showMsg('setupMsg',e.message)}}
+function populateParticipants(){const sel=$('participantSelect');sel.innerHTML='<option value="">Selecciona tu nombre</option>';state.names.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n+(state.claimed[n]?' · completado':'');o.disabled=!!state.claimed[n];sel.appendChild(o)})}
+async function spinWheel(){const n=$('participantSelect').value,c=$('participantCode').value.trim();$('participantMsg').innerHTML='';if(!n)return showMsg('participantMsg','Selecciona tu nombre.');$('spinBtn').disabled=true;$('wheel').classList.add('spin');try{const r=await api('/api/claim',{method:'POST',body:JSON.stringify({name:n,code:c})});setTimeout(async()=>{$('resultName').textContent=r.assignment;playRevealFanfare();launchFireworks();$('resultBox').classList.remove('hidden');$('wheel').classList.remove('spin');state=await api('/api/status');populateParticipants()},1800)}catch(e){$('wheel').classList.remove('spin');$('spinBtn').disabled=false;showMsg('participantMsg',e.message)}}
+function closeResult(){$('resultBox').classList.add('hidden');$('participantSelect').value='';$('participantCode').value='';$('spinBtn').disabled=false;$('participantMsg').innerHTML=''}
+function openAdmin(){$('adminModal').classList.remove('hidden');$('adminUser').focus()}function closeAdmin(){$('adminModal').classList.add('hidden');$('adminLoginMsg').innerHTML='';$('adminPin').value='';$('adminUser').value=''}
+async function loginAdmin(){const user=$('adminUser').value.trim(),pin=$('adminPin').value;try{const r=await api('/api/admin',{method:'POST',body:JSON.stringify({user,pin})});adminCredentials={user,pin};closeAdmin();startBackgroundMusic();renderAdmin(r);$('adminPanel').classList.remove('hidden')}catch(e){showMsg('adminLoginMsg',e.message)}}function logoutAdmin(){adminCredentials=null;$('adminPanel').classList.add('hidden')}
+function renderAdmin(d){state.participantCode=d.participantCode;$('adminList').innerHTML=d.names.map(n=>`<div class="row"><div><b>${esc(n)}</b><div class="small">Código general: ${esc(d.participantCode)}</div></div><div><span class="status ${d.claimed[n]?'done':'pending'}">${d.claimed[n]?'Listo':'Pendiente'}</span></div><div class="assignment"><span class="small">Le toca:</span><br><b>${esc(d.assignments[n])}</b></div></div>`).join('')}
+function toggleNameEditor(){const b=$('nameEditor');b.classList.toggle('hidden');if(!b.classList.contains('hidden'))renderParticipantFields(state.names)}function renderParticipantFields(names){const h=$('participantFields');h.innerHTML='';names.forEach(addParticipantField);updateParticipantCount()}function addParticipantField(value=''){const h=$('participantFields'),r=document.createElement('div');r.className='actions';r.style.margin='8px 0';r.innerHTML=`<input class="participant-name-input" value="${esc(value)}" placeholder="Nombre del participante" style="flex:1;min-width:180px;border:1px solid #cbd7d0;border-radius:12px;padding:12px;font:inherit"><button type="button" class="btn btn-red">Eliminar</button>`;r.querySelector('button').onclick=()=>{r.remove();updateParticipantCount()};r.querySelector('input').oninput=updateParticipantCount;h.appendChild(r);updateParticipantCount()}function editedNames(){return [...document.querySelectorAll('.participant-name-input')].map(x=>x.value.trim()).filter(Boolean)}function updateParticipantCount(){if($('participantCount'))$('participantCount').textContent=`Participantes registrados: ${editedNames().length}`}
+async function saveNames(){const names=editedNames();if(names.length<2)return showMsg('namesMsg','Debes ingresar al menos 2 participantes.');if(new Set(names.map(x=>x.toLowerCase())).size!==names.length)return showMsg('namesMsg','Los nombres deben ser únicos.');try{const r=await api('/api/admin/names',{method:'POST',body:JSON.stringify({...adminCredentials,names})});state=await api('/api/status');populateParticipants();renderAdmin(r);$('nameEditor').classList.add('hidden');alert('Participantes actualizados.')}catch(e){showMsg('namesMsg',e.message)}}
+function toggleSecurityEditor(){$('securityEditor').classList.toggle('hidden');$('newParticipantCode').value=state.participantCode||''}
+async function changeParticipantCode(){const code=$('newParticipantCode').value.trim();if(code.length<4)return showMsg('securityMsg','El código debe tener al menos 4 caracteres.');try{const r=await api('/api/admin/participant-code',{method:'POST',body:JSON.stringify({...adminCredentials,code})});state.participantCode=r.participantCode;renderAdmin(r);$('newParticipantCode').value='';showMsg('securityMsg','Código de participantes actualizado.','ok')}catch(e){showMsg('securityMsg',e.message)}}
+async function changeAdminPin(){const currentPin=$('currentAdminPin').value,newPin=$('newAdminPin').value,confirmPin=$('confirmAdminPin').value;if(currentPin!==adminCredentials.pin)return showMsg('securityMsg','La clave actual no coincide.');if(newPin.length<4)return showMsg('securityMsg','La nueva clave debe tener al menos 4 caracteres.');if(newPin!==confirmPin)return showMsg('securityMsg','La confirmación no coincide.');try{await api('/api/admin/pin',{method:'POST',body:JSON.stringify({...adminCredentials,currentPin,newPin})});adminCredentials.pin=newPin;['currentAdminPin','newAdminPin','confirmAdminPin'].forEach(id=>$(id).value='');showMsg('securityMsg','Clave de admin01 actualizada.','ok')}catch(e){showMsg('securityMsg',e.message)}}
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}async function exportExcel(){try{const d=await api('/api/admin',{method:'POST',body:JSON.stringify(adminCredentials)}),rows=[['Participante','Código general','Estado','Fecha','Amigo asignado'],...d.names.map(n=>[n,d.participantCode,d.claimed[n]?'Completado':'Pendiente',d.claimed[n]||'',d.assignments[n]])],csv='\ufeff'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n');download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'amigo_secreto_resultados.csv')}catch(e){alert(e.message)}}async function downloadBackup(){const d=await api('/api/admin',{method:'POST',body:JSON.stringify(adminCredentials)});download(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),'amigo_secreto_respaldo_admin.json')}function download(b,n){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}async function importBackup(e){const f=e.target.files[0];if(!f)return;try{const backup=JSON.parse(await f.text()),r=await api('/api/admin/import',{method:'POST',body:JSON.stringify({...adminCredentials,backup})});state=await api('/api/status');populateParticipants();renderAdmin(r);alert('Respaldo importado.')}catch(x){alert(x.message)}e.target.value=''}async function resetDraw(){if(!confirm('Esto eliminará completamente el sorteo compartido.'))return;try{await api('/api/admin/reset',{method:'POST',body:JSON.stringify(adminCredentials)});location.reload()}catch(e){alert(e.message)}}init();
+</script>
+
+<canvas id="fireworksCanvas" aria-hidden="true"></canvas>
+<button id="musicBtn" class="btn music-btn" type="button" onclick="toggleMusic()" aria-pressed="false">🎹 Activar piano</button>
+<script>
+let audioCtx=null, musicTimer=null, musicOn=false, noteIndex=0;
+const melody=[
+  [659,0.22],[659,0.22],[659,0.45],[659,0.22],[659,0.22],[659,0.45],
+  [659,0.22],[784,0.22],[523,0.32],[587,0.12],[659,0.70],
+  [698,0.22],[698,0.22],[698,0.32],[698,0.12],[698,0.22],[659,0.22],[659,0.22],[659,0.12],[659,0.12],
+  [659,0.22],[587,0.22],[587,0.22],[659,0.22],[587,0.45],[784,0.45]
+];
+function playSoftNote(freq,duration){
+  if(!musicOn||!audioCtx)return;
+  const now=audioCtx.currentTime;
+  const master=audioCtx.createGain();
+  const tone=audioCtx.createBiquadFilter();
+  tone.type='lowpass'; tone.frequency.setValueAtTime(3200,now); tone.Q.value=.45;
+  master.gain.setValueAtTime(.0001,now);
+  master.gain.exponentialRampToValueAtTime(.052,now+.012);
+  master.gain.exponentialRampToValueAtTime(.018,now+.16);
+  master.gain.exponentialRampToValueAtTime(.0001,now+Math.max(.75,duration*2.6));
+  tone.connect(master); master.connect(audioCtx.destination);
+  const layers=[
+    {ratio:1,type:'triangle',gain:.72,detune:0},
+    {ratio:2,type:'sine',gain:.18,detune:-3},
+    {ratio:3,type:'sine',gain:.075,detune:4},
+    {ratio:.5,type:'sine',gain:.10,detune:0}
+  ];
+  layers.forEach(layer=>{
+    const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
+    osc.type=layer.type; osc.frequency.setValueAtTime(freq*layer.ratio,now); osc.detune.value=layer.detune;
+    g.gain.setValueAtTime(layer.gain,now);
+    g.gain.exponentialRampToValueAtTime(.0001,now+Math.max(.7,duration*2.4));
+    osc.connect(g); g.connect(tone); osc.start(now); osc.stop(now+Math.max(.8,duration*2.7));
+  });
+  const hammer=audioCtx.createBufferSource(),hammerGain=audioCtx.createGain();
+  const buffer=audioCtx.createBuffer(1,Math.floor(audioCtx.sampleRate*.025),audioCtx.sampleRate),arr=buffer.getChannelData(0);
+  for(let i=0;i<arr.length;i++)arr[i]=(Math.random()*2-1)*Math.pow(1-i/arr.length,3);
+  hammer.buffer=buffer; hammerGain.gain.setValueAtTime(.018,now); hammerGain.gain.exponentialRampToValueAtTime(.0001,now+.025);
+  hammer.connect(hammerGain); hammerGain.connect(master); hammer.start(now);
+}
+function scheduleNextNote(){
+  if(!musicOn)return;
+  const [freq,duration]=melody[noteIndex]; playSoftNote(freq,duration);
+  noteIndex=(noteIndex+1)%melody.length;
+  musicTimer=setTimeout(scheduleNextNote,duration*1000+55);
+}
+
+function startBackgroundMusic(){
+  if(musicOn)return;
+  musicOn=true;
+  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const btn=document.getElementById('musicBtn');
+  btn.textContent='❚❚ Pausar piano'; btn.setAttribute('aria-pressed','true');
+  scheduleNextNote();
+}
+function playRevealFanfare(){
+  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const notes=[[523,.12,0],[659,.12,.13],[784,.16,.27],[1047,.55,.45]];
+  notes.forEach(([freq,dur,delay])=>{
+    const t=audioCtx.currentTime+delay, osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.type='triangle'; osc.frequency.value=freq;
+    gain.gain.setValueAtTime(.0001,t); gain.gain.exponentialRampToValueAtTime(.09,t+.025); gain.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(t); osc.stop(t+dur+.03);
+  });
+}
+function launchFireworks(){
+  const canvas=document.getElementById('fireworksCanvas'),ctx=canvas.getContext('2d');
+  canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  const colors=['#ffd54f','#ff416c','#5fffc3','#ffffff','#59a9ff'];
+  let particles=[];
+  for(let burst=0;burst<7;burst++){
+    const x=innerWidth*(.12+Math.random()*.76),y=innerHeight*(.12+Math.random()*.48),color=colors[burst%colors.length];
+    for(let i=0;i<42;i++){const a=Math.PI*2*i/42+Math.random()*.12,sp=2+Math.random()*5;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:70+Math.random()*25,color,size:1.5+Math.random()*2.5})}
+  }
+  function frame(){ctx.clearRect(0,0,innerWidth,innerHeight);particles=particles.filter(p=>p.life>0);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.045;p.vx*=.992;p.life--;ctx.globalAlpha=Math.max(0,p.life/90);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill()});ctx.globalAlpha=1;if(particles.length)requestAnimationFrame(frame);else ctx.clearRect(0,0,innerWidth,innerHeight)}
+  frame();
+}
+function toggleMusic(){
+  const btn=document.getElementById('musicBtn'); musicOn=!musicOn;
+  if(musicOn){
+    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended')audioCtx.resume();
+    btn.textContent='❚❚ Pausar piano'; btn.setAttribute('aria-pressed','true'); scheduleNextNote();
+  }else{
+    clearTimeout(musicTimer); btn.textContent='🎹 Activar piano'; btn.setAttribute('aria-pressed','false');
+  }
+}
+</script>
+</body>
+</html>
